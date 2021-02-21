@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const { NotFound } = require('../errors');
 
 const checkDataError = (res, err) => {
   if ((err.name === 'ValidationError') || (err.name === 'CastError')) {
@@ -17,16 +18,18 @@ const getUsers = (req, res) => {
     });
 };
 
-const getUser = (req, res) => {
+const getUser = (req, res, next) => {
   const { userId } = req.params;
   User.findOne({ _id: userId })
     .then((user) => {
       if (!user) {
-        return res.status(404).send({ message: 'Нет пользователя с таким id' });
+        throw new NotFound('Нет пользователя с таким id');
       }
       return res.send(user);
     })
-    .catch((err) => checkDataError(res, err));
+    .catch((err) => {
+      next(err);
+    });
 };
 
 const createUser = (req, res) => {
