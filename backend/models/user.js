@@ -5,17 +5,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     minlength: 2,
     maxlength: 30,
-    required: true,
   },
   about: {
     type: String,
-    required: true,
     minlength: 2,
     maxlength: 30,
   },
   avatar: {
     type: String,
-    required: true,
     validate: {
       validator(v) {
         const regex = /https?:\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
@@ -23,6 +20,19 @@ const userSchema = new mongoose.Schema({
       },
       message: 'Некорректная ссылка на аватар',
     },
+  },
+  email: {
+    type: String,
+    minlength: 2,
+    maxlength: 30,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    minlength: 6,
+    required: true,
+    select: false,
   },
 });
 

@@ -1,5 +1,6 @@
 const User = require('../models/user');
-const { NotFound } = require('../errors');
+const { NotFound, Conflict } = require('../errors');
+const bcrypt = require('bcrypt');
 
 const checkDataError = (res, err) => {
   if ((err.name === 'ValidationError') || (err.name === 'CastError')) {
@@ -32,11 +33,23 @@ const getUser = (req, res, next) => {
     });
 };
 
-const createUser = (req, res) => {
-  const { name, about, avatar } = req.body;
-  User.create({ name, about, avatar })
-    .then((user) => res.send({ user }))
-    .catch((err) => checkDataError(res, err));
+const createUser = (req, res, next) => {
+  const { name, about, avatar, email, password } = req.body;
+
+  User.findOne({email})
+    .then((user) => {
+      if (user) {
+        throw new Conflict('Пользователь уже существует')
+      }
+      return bcrypt.hash(password, 10)
+    })
+    .then((password) => { //password = hash
+      return User.create({name, about, avatar, email, password});
+    })
+    .then(({_id, email}) => {
+      res.send({_id, email});
+    })
+    .catch(next);
 };
 
 const updateUser = (req, res) => {
@@ -67,6 +80,10 @@ const updateAvatar = (req, res) => {
     .catch((err) => checkDataError(res, err));
 };
 
+const login = (req, res, next) => {
+
+}
+
 module.exports = {
-  getUsers, getUser, createUser, updateUser, updateAvatar,
+  getUsers, getUser, createUser, updateUser, updateAvatar, login
 };

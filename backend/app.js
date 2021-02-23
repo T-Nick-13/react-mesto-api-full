@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 
 const router = require('./routes');
 const errorHandler = require('./middlewares/errorHandler');
+const { login, createUser } = require('./controllers/users');
+const registerValidator = require('./middlewares/validators/register');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -25,6 +27,10 @@ app.use((req, res, next) => {
 });
 
 app.use('/', router);
+app.post('/signin', login);
+app.post('/signup', registerValidator, createUser);
+
+
 app.use(errorHandler);
 
 app.use((req, res) => {
