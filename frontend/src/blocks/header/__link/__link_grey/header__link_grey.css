@@ -1,0 +1,10 @@
+.header__link_grey {
+  text-decoration: none;
+  color: #A9A9A9;
+  transition: opacity 0.5s linear;
+}
+
+.header__link_grey:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}

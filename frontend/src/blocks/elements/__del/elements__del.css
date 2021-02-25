@@ -1,0 +1,23 @@
+.elements__del {
+  visibility: hidden;
+  width: 18px;
+  height: 19.3px;
+  background-image: url(../../../images/Group.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  padding: 0;
+  transition: opacity 0.5s linear;
+  position: absolute;
+  top: 18px;
+  left: 249px;
+
+}
+
+.elements__del:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}

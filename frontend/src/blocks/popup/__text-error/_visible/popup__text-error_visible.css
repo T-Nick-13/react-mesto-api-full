@@ -1,0 +1,16 @@
+.popup__text-error_visible {
+  display: block;
+  font-size: 12px;
+  line-height: 15px;
+  color: #FF0000;
+  width: 358px;
+  margin: 5px auto 0;
+}
+
+@media (max-width: 480px) {
+  .popup__text-error_visible {
+    width: 62vw;
+    font-size: 10px;
+    line-height: 13px;
+  }
+}

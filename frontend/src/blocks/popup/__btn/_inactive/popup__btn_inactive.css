@@ -1,0 +1,12 @@
+.popup__btn_inactive {
+  border: 1px solid #C4C4C4;;
+  color: #C4C4C4;;
+  background: #FFF;
+}
+
+.popup__btn_inactive:hover {
+  border: 1px solid #C4C4C4;;
+  color: #C4C4C4;;
+  background: #FFF;
+  cursor: not-allowed;
+}

@@ -1,0 +1,37 @@
+@import url(./__logo/header__logo.css);
+@import url(./__container/header__container.css);
+@import url(./__link/header__link.css);
+@import url(./__user/header__user.css);
+@import url(./__link/__link_grey/header__link_grey.css);
+
+.header {
+  width: 69vw;
+  padding-top: 45px;
+  max-width: 882px;
+  border-bottom: 1px solid rgb(84, 84, 84, 0.7);
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 1279px) {
+  .header {
+    width: 90vw;
+  }
+
+  .header:after {
+    width: 90vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding-top: 28px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .header:after {
+    width: 100%;
+    max-width: 100%;
+  }
+}

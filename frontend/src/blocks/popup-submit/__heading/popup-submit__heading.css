@@ -1,0 +1,17 @@
+.popup-submit__heading {
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  color: #000;
+  margin: 34px auto 38px;
+  width: 358px;
+}
+
+@media (max-width: 480px) {
+  .popup-submit__heading  {
+    font-size: 18px;
+    line-height: 22px;
+    width: 185px;
+    margin: 30px auto 20px;
+  }
+}

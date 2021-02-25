@@ -1,0 +1,27 @@
+.profile__info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  width: 340px;
+  margin-left: 30px;
+  margin-top: 18px;
+  margin-bottom: 25px;
+  flex-direction: column;
+}
+
+@media (max-width: 604px) {
+  .profile__info {
+    margin-bottom: 0;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0;
+  }
+}
+
+/* @media (max-width: 583px) {
+  .profile__info {
+    margin-left: 0;
+    width: 282px;
+  }
+}
+ */

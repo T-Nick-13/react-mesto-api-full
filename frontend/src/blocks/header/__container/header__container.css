@@ -1,0 +1,9 @@
+.header__container {
+  font-style: normal;
+  font-size: 18px;
+  line-height: 22px;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 45px;
+}
+

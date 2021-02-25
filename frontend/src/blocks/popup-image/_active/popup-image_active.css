@@ -1,0 +1,4 @@
+.popup-image_active {
+  visibility: visible;
+  background-color: rgba(1, 1, 1, 0.9);
+}
