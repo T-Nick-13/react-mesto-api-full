@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import Main from './Main.js';
 import ImagePopup from './ImagePopup.js';
-import api from '../utils/api.js';
+import Api from '../utils/Api.js';
 import EditProfilePopup from './EditProfilePopup.js';
 import EditAvatarPopup from './EditAvatarPopup.js';
 import AddPlacePopup from './AddPlacePopup.js';
@@ -32,6 +32,14 @@ function App() {
   const [registered, setRegistered] = React.useState(false);
 
   const history = useHistory();
+
+  const api = new Api({
+    baseUrl: auth.BASE_URL,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   React.useEffect(() => {
     tokenCheck();

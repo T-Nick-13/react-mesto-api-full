@@ -9,7 +9,9 @@ const registerValidator = require('./middlewares/validators/register');
 
 const { PORT = 3000 } = process.env;
 const app = express();
+const cors = require('cors');
 
+const path = require('path');
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
@@ -18,19 +20,17 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 });
 
 app.use(bodyParser.json());
+app.use(cors());
 
-app.use((req, res, next) => {
-  req.user = {
-    _id: '6011b0c794f4f61068b92487',
-  };
-
-  next();
-});
-
+//app.use('/', require('../router'));
 app.use('/', router);
+
+// раздаём папку с собранным фронтендом
+/* app.use(express.static(path.join(__dirname, '../frontend/build'))); */
+
+//app.use('/', router);
 app.post('/signin', login);
 app.post('/signup', registerValidator, createUser);
-
 
 app.use(errorHandler);
 

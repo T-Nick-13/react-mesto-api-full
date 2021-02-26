@@ -1,7 +1,7 @@
 class Api {
-  constructor(config) {
-    this._url = config.url;
-    this._headers = config.headers;
+  constructor({ baseUrl, headers }) {
+    this._url = baseUrl;
+    this._headers = headers;
   }
 
   _checkServerResponse(res) {
@@ -91,12 +91,12 @@ class Api {
 }
 
 
-const api = new Api ({
+/* const api = new Api ({
   url: 'http://api.ntitov.students.nomoreparties.space',
   headers: {
-    "Authorization": `Bearer ${token}`,
+    //"Authorization": `Bearer ${token}`,
     'content-type': 'application/json'
   }
-});
+}); */
 
-export default api
+export default Api

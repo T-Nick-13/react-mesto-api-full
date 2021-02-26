@@ -36,6 +36,7 @@ const getUser = (req, res, next) => {
     });
 };
 
+
 const createUser = (req, res, next) => {
   const { name, about, avatar, email, password } = req.body;
 
