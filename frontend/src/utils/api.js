@@ -92,9 +92,10 @@ class Api {
 
 
 /* const api = new Api ({
-  url: 'http://api.ntitov.students.nomoreparties.space',
+  url: 'https://mesto.nomoreparties.co/v1/cohort-17',
   headers: {
     //"Authorization": `Bearer ${token}`,
+    authorization: 'd0f4e15e-5e8f-4105-8cb3-71e6a52f3645',
     'content-type': 'application/json'
   }
 }); */

@@ -32,6 +32,7 @@ function App() {
   const [registered, setRegistered] = React.useState(false);
 
   const history = useHistory();
+  const token = localStorage.getItem('token');
 
   const api = new Api({
     baseUrl: auth.BASE_URL,

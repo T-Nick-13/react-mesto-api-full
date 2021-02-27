@@ -25,12 +25,12 @@ app.use(cors());
 //app.use('/', require('../router'));
 app.use('/', router);
 
-// раздаём папку с собранным фронтендом
-/* app.use(express.static(path.join(__dirname, '../frontend/build'))); */
+/* // раздаём папку с собранным фронтендом
+app.use(express.static(path.join(__dirname, '../frontend/build'))); */
 
 //app.use('/', router);
-app.post('/signin', login);
-app.post('/signup', registerValidator, createUser);
+app.post('/sign-in', login);
+app.post('/sign-up', registerValidator, createUser);
 
 app.use(errorHandler);
 
