@@ -54,6 +54,7 @@ function App() {
 
 
   React.useEffect(() => {
+    if (loggedIn) {
     Promise.all([
       api.getUserData(),
       api.getInitialCards()
@@ -65,7 +66,8 @@ function App() {
     .catch((err) => {
       console.log(err);
     })
-  }, [])
+    }
+  }, [loggedIn])
 
 
   React.useEffect(() => {

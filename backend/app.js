@@ -31,7 +31,7 @@ app.post('/signup', registerValidator, createUser);
 app.use('/', router);
 
 // раздаём папку с собранным фронтендом
-/* app.use(express.static(path.join(__dirname, '../frontend/build'))); */
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 /* app.use(errorHandler); */
 
