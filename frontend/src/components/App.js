@@ -32,13 +32,14 @@ function App() {
   const [registered, setRegistered] = React.useState(false);
 
   const history = useHistory();
-  const token = localStorage.getItem('token');
+  //const token = localStorage.getItem('token');
+  const getToken = () => localStorage.getItem('token')
 
   const api = new Api({
     baseUrl: auth.BASE_URL,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${getToken()}`,
     },
   });
 

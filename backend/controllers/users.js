@@ -36,6 +36,20 @@ const getUser = (req, res, next) => {
     });
 };
 
+const getUserMe = (req, res, next) => {
+  const { _id } = req.user;
+  User.findById(_id)
+    .then((user) => {
+      if (!user) {
+        throw new NotFound('Нет пользователя с таким id');
+    }
+      return res.send(user);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
 
 const createUser = (req, res, next) => {
   const { name, about, avatar, email, password } = req.body;
@@ -108,5 +122,5 @@ const login = (req, res, next) => {
 }
 
 module.exports = {
-  getUsers, getUser, createUser, updateUser, updateAvatar, login
+  getUsers, getUser, createUser, updateUser, updateAvatar, login, getUserMe
 };

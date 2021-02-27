@@ -6,7 +6,7 @@ const auth = (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    throw new Forbidden('Необходима авторизация');
+    throw new Forbidden('Необходима авторизация?');
   }
 
   const token = authorization.replace('Bearer ', '');
@@ -16,7 +16,7 @@ const auth = (req, res, next) => {
     const user = jwt.verify(token, JWT_SECRET);
     req.user = user;
   } catch (err) {
-    throw new Forbidden('Необходима авторизация');
+    throw new Forbidden('Необходима авторизация??');
   }
 
   next();
