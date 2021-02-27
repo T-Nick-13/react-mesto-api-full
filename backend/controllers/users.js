@@ -39,8 +39,8 @@ const getUser = (req, res, next) => {
 };
 
 const getUserMe = (req, res, next) => {
-  const userId = req.user.id;
-  return User.findById(userId)
+  const userId = req.user._id;
+  User.findById(userId)
     .then((user) => {
       if (!user) {
         throw new NotFound('Нет пользователя с таким id');
@@ -75,7 +75,7 @@ const createUser = (req, res, next) => {
 const updateUser = (req, res) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(
-    req.user.id,
+    req.user._id,
     { name, about },
     {
       new: true,
@@ -89,7 +89,7 @@ const updateUser = (req, res) => {
 const updateAvatar = (req, res) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(
-    req.user.id,
+    req.user._id,
     { avatar },
     {
       new: true,
@@ -117,7 +117,7 @@ const login = (req, res, next) => {
         })
     })
     .then((user) => {
-      const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: JWT_TTL });
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: JWT_TTL });
       res.send({ token });
     })
     .catch(next);
