@@ -24,7 +24,7 @@ function Register({onRegister}) {
 
   return(
     <div className="page-auth">
-      <Header headerRoute="/sign-in" headerLink="Войти" headerClass="header__link" />
+      <Header headerRoute="/signin" headerLink="Войти" headerClass="header__link" />
       <div className="auth">
         <p className="auth__heading">Регистрация</p>
         <form onSubmit={handleSubmit} className="auth__form">
@@ -34,7 +34,7 @@ function Register({onRegister}) {
             value={data.password} onChange={handleChange} placeholder="Пароль" />
           <button type="submit" className="auth__btn">Зарегистрироваться</button>
           <p className="auth__text">Уже зарегистрированы?&nbsp;
-            <Link to="/sign-in" className="auth__link">Войти</Link>
+            <Link to="/signin" className="auth__link">Войти</Link>
           </p>
         </form>
       </div>

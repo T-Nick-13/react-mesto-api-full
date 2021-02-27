@@ -23,7 +23,7 @@ function Login({handleLogin}) {
 
   return(
     <div className="page-auth">
-      <Header headerRoute="/sign-up" headerLink="Регистрация" headerClass="header__link"/>
+      <Header headerRoute="/signup" headerLink="Регистрация" headerClass="header__link"/>
       <div className="auth">
         <p className="auth__heading">Вход</p>
         <form onSubmit={handleSubmit} className="auth__form">

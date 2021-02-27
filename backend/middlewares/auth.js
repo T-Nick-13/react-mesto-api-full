@@ -5,7 +5,7 @@ const { JWT_SECRET } = require('../config');
 const auth = (req, res, next) => {
   const { authorization } = req.headers;
 
-  if (!authorization || !authorization.startsWith('Bearer ')) {
+  if (!authorization /* || !authorization.startsWith('Bearer ') */) {
     throw new Forbidden('Необходима авторизация?');
   }
 
@@ -13,13 +13,16 @@ const auth = (req, res, next) => {
   let payload;
 
   try {
-    const user = jwt.verify(token, JWT_SECRET);
-    req.user = user;
-  } catch (err) {
+    payload = jwt.verify(token, JWT_SECRET);
+  } catch (error) {
     throw new Forbidden('Необходима авторизация??');
   }
+
+  req.user = payload;
 
   next();
 };
 
 module.exports = auth;
+
+

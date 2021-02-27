@@ -4,11 +4,20 @@ class Api {
     this._headers = headers;
   }
 
+  getHeaders() {
+    const token = localStorage.getItem('token');
+    return {
+      ...this.headers,
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    }
+  }
+
   _checkServerResponse(res) {
     if (res.ok) {
       return res.json()
     }
-    return Promise.reject('Some error')
+    return Promise.reject(res.status)
   }
 
 
@@ -41,7 +50,7 @@ class Api {
 
   getUserData() {
     return fetch(`${this._url}/users/me`, {
-      headers: this._headers
+      headers: this.getHeaders()
     })
     .then(this._checkServerResponse);
   }
@@ -50,7 +59,7 @@ class Api {
   saveUserData(data) {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: this.getHeaders(),
       body: JSON.stringify(data)
     })
     .then(this._checkServerResponse);
@@ -60,7 +69,7 @@ class Api {
   saveAvatar(data) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: this.getHeaders(),
       body: JSON.stringify(data)
     })
     .then(this._checkServerResponse);

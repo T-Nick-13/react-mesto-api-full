@@ -4,8 +4,10 @@ const bodyParser = require('body-parser');
 
 const router = require('./routes');
 const errorHandler = require('./middlewares/errorHandler');
-const { login, createUser } = require('./controllers/users');
-const registerValidator = require('./middlewares/validators/register');
+const { login, createUser
+} = require('../backend/controllers/users');
+const authMiddleware = require('../backend/middlewares/auth');
+const registerValidator = require('../backend/middlewares/validators/register');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -22,17 +24,16 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 app.use(bodyParser.json());
 app.use(cors());
 
-//app.use('/', require('../router'));
-app.use('/', router);
 
-// раздаём папку с собранным фронтендом
-app.use(express.static(path.join(__dirname, '../frontend/build')));
-
-//app.use('/', router);
 app.post('/signin', login);
 app.post('/signup', registerValidator, createUser);
 
-app.use(errorHandler);
+app.use('/', router);
+
+// раздаём папку с собранным фронтендом
+/* app.use(express.static(path.join(__dirname, '../frontend/build'))); */
+
+/* app.use(errorHandler); */
 
 app.use((req, res) => {
   res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });

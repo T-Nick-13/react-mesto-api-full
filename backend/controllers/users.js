@@ -3,6 +3,7 @@ const { NotFound, Conflict, Unauthorized } = require('../errors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET, JWT_TTL } = require('../config');
+const user = require('../models/user');
 
 
 const checkDataError = (res, err) => {
@@ -24,7 +25,8 @@ const getUsers = (req, res) => {
 
 const getUser = (req, res, next) => {
   const { userId } = req.params;
-  User.findOne({ _id: userId })
+  return User.findOne({ _id: userId })
+
     .then((user) => {
       if (!user) {
         throw new NotFound('Нет пользователя с таким id');
@@ -37,13 +39,13 @@ const getUser = (req, res, next) => {
 };
 
 const getUserMe = (req, res, next) => {
-  const { _id } = req.user;
-  User.findById(_id)
+  const userId = req.user.id;
+  return User.findById(userId)
     .then((user) => {
       if (!user) {
         throw new NotFound('Нет пользователя с таким id');
     }
-      return res.send(user);
+      res.send(user);
     })
     .catch((err) => {
       next(err);
@@ -73,7 +75,7 @@ const createUser = (req, res, next) => {
 const updateUser = (req, res) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(
-    req.user._id,
+    req.user.id,
     { name, about },
     {
       new: true,
@@ -87,7 +89,7 @@ const updateUser = (req, res) => {
 const updateAvatar = (req, res) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(
-    req.user._id,
+    req.user.id,
     { avatar },
     {
       new: true,
@@ -111,11 +113,11 @@ const login = (req, res, next) => {
           if (isValid){
             return user;
           }
-          throw new Unauthorized('Неверный email или пароль');
+          throw new Unauthorized('Неверный email или пароль!!');
         })
     })
-    .then(({_id}) => {
-      const token = jwt.sign({_id}, JWT_SECRET, { expiresIn: JWT_TTL });
+    .then((user) => {
+      const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: JWT_TTL });
       res.send({ token });
     })
     .catch(next);

@@ -14,6 +14,8 @@ import InfoTooltip from './InfoTooltip.js';
 import * as auth from '../utils/auth.js';
 import Footer from './Footer.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+import defaultAvatar from '../images/kusto.jpg';
+
 
 function App() {
 
@@ -23,7 +25,7 @@ function App() {
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
   const [cards, setCards] = React.useState([]);
   const [selectedCard, setSelectedCard] = React.useState({});
-  const [currentUser, setCurrentUser] = React.useState('');
+  const [currentUser, setCurrentUser] = React.useState({name: 'Жак-Ив Кусто', about: 'Исследователь', avatar: defaultAvatar });
   const [loading, setLoading] = React.useState('Сохранить');
   const [loadingPlace, setLoadingPlace] = React.useState('Создать');
 
@@ -32,20 +34,17 @@ function App() {
   const [registered, setRegistered] = React.useState(false);
 
   const history = useHistory();
-  //const token = localStorage.getItem('token');
-  const getToken = () => localStorage.getItem('token')
+  const token = localStorage.getItem('token');
 
   const api = new Api({
     baseUrl: auth.BASE_URL,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${getToken()}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
-  React.useEffect(() => {
-    tokenCheck();
-  }, []);
+
 
   React.useEffect(() => {
     if (loggedIn) {
@@ -193,7 +192,7 @@ function App() {
         if (res) {
           setIsInfoTooltipPopupOpen(true);
           setRegistered(true);
-          history.push('/sign-in');
+          history.push('/signin');
         }
       })
       .catch((err) => {
@@ -221,11 +220,15 @@ function App() {
 
   }
 
+  React.useEffect(() => {
+    tokenCheck();
+  }, []);
+
 
   function handleSignOut() {
     setLoggedIn(false);
     localStorage.removeItem('token');
-    history.push('/sign-in')
+    history.push('/signin')
   }
 
 
@@ -234,10 +237,10 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
 
       <Switch>
-      <Route path="/sign-in">
+      <Route path="/signin">
           <Login handleLogin={handleLogin} />
         </Route>
-        <Route path="/sign-up">
+        <Route path="/signup">
           <Register onRegister={handleRegister} />
         </Route>
         <ProtectedRoute
@@ -258,7 +261,7 @@ function App() {
           handleCardDelete={handleCardDelete}
         />
        <Route>
-          {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
+          {loggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
        </Route>
       </Switch>
 

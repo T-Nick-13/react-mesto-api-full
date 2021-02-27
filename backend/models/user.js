@@ -5,11 +5,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     minlength: 2,
     maxlength: 30,
+    default: 'Жак-Ив Кусто',
   },
   about: {
     type: String,
     minlength: 2,
     maxlength: 30,
+    default: 'Исследователь',
   },
   avatar: {
     type: String,
@@ -20,6 +22,7 @@ const userSchema = new mongoose.Schema({
       },
       message: 'Некорректная ссылка на аватар',
     },
+    default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
   },
   email: {
     type: String,
@@ -30,7 +33,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    minlength: 6,
+    minlength: 2,
     required: true,
     select: false,
   },
