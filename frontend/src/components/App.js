@@ -14,7 +14,7 @@ import InfoTooltip from './InfoTooltip.js';
 import * as auth from '../utils/auth.js';
 import Footer from './Footer.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
-import defaultAvatar from '../images/kusto.jpg';
+//import defaultAvatar from '../images/kusto.jpg';
 
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
   const [cards, setCards] = React.useState([]);
   const [selectedCard, setSelectedCard] = React.useState({});
-  const [currentUser, setCurrentUser] = React.useState({name: 'Жак-Ив Кусто', about: 'Исследователь', avatar: defaultAvatar });
+  const [currentUser, setCurrentUser] = React.useState({ });
   const [loading, setLoading] = React.useState('Сохранить');
   const [loadingPlace, setLoadingPlace] = React.useState('Создать');
 
@@ -44,42 +44,16 @@ function App() {
     },
   });
 
-
+/*
 
   React.useEffect(() => {
     if (loggedIn) {
       history.push('/');
     }
-  }, [loggedIn])
+  }, [loggedIn]) */
 
 
-  React.useEffect(() => {
-    if (loggedIn) {
-    Promise.all([
-      api.getUserData(),
-      api.getInitialCards()
-    ])
-    .then(([userInfo, initialCards]) => {
-      setCurrentUser(userInfo);
-      setCards(initialCards)
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    }
-  }, [loggedIn])
 
-
-  React.useEffect(() => {
-    const ESC = 'Escape';
-    function handleEscClose(evt) {
-      if (evt.key === ESC) {
-        closeAllPopups();
-      }
-    }
-    document.addEventListener('keyup', handleEscClose);
-    return () => document.removeEventListener('keyup', handleEscClose)
-  }, [])
 
 
   function handleEditProfileClick() {
@@ -212,7 +186,7 @@ function App() {
           if (res) {
             setLoggedIn(true);
             history.push("/");
-            setEmail(res.data.email);
+            setEmail(res.email);
           }
         })
         .catch((err) => {
@@ -222,9 +196,39 @@ function App() {
 
   }
 
+
+
+  React.useEffect(() => {
+    if (loggedIn) {
+    Promise.all([
+      api.getUserData(),
+      api.getInitialCards()
+    ])
+    .then(([userInfo, initialCards]) => {
+      setCurrentUser(userInfo);
+      setCards(initialCards)
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    }
+  }, [loggedIn])
+
   React.useEffect(() => {
     tokenCheck();
   }, []);
+
+
+  React.useEffect(() => {
+    const ESC = 'Escape';
+    function handleEscClose(evt) {
+      if (evt.key === ESC) {
+        closeAllPopups();
+      }
+    }
+    document.addEventListener('keyup', handleEscClose);
+    return () => document.removeEventListener('keyup', handleEscClose)
+  }, [])
 
 
   function handleSignOut() {
