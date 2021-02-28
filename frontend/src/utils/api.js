@@ -23,7 +23,7 @@ class Api {
 
   getInitialCards() {
     return fetch(`${this._url}/cards`, {
-      headers: this._headers
+      headers: this.getHeaders()
     })
     .then(this._checkServerResponse);
   }
@@ -32,7 +32,7 @@ class Api {
   saveNewCard(data) {
     return fetch(`${this._url}/cards`, {
       method: 'POST',
-      headers: this._headers,
+      headers: this.getHeaders(),
       body: JSON.stringify(data)
     })
     .then(this._checkServerResponse);
@@ -42,7 +42,7 @@ class Api {
   deleteCard(cardId) {
     return fetch(`${this._url}/cards/${cardId}`, {
       method: 'DELETE',
-      headers: this._headers
+      headers: this.getHeaders()
     })
     .then(this._checkServerResponse);
   }
@@ -79,7 +79,7 @@ class Api {
   saveLike(cardId) {
     return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: 'PUT',
-      headers: this._headers,
+      headers: this.getHeaders()
     })
     .then(this._checkServerResponse);
   }
@@ -88,7 +88,7 @@ class Api {
   deleteLike(cardId) {
     return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: this.getHeaders()
     })
     .then(this._checkServerResponse);
   }

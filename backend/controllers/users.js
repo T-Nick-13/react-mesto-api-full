@@ -2,11 +2,8 @@ const User = require('../models/user');
 const { NotFound, Conflict, Unauthorized } = require('../errors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { JWT_TTL } = require('../config');
+const { JWT_SECRET, JWT_TTL } = require('../config');
 const user = require('../models/user');
-
-const { NODE_ENV, JWT_SECRET } = process.env;
-
 
 const checkDataError = (res, err) => {
   if ((err.name === 'ValidationError') || (err.name === 'CastError')) {
@@ -84,7 +81,7 @@ const updateUser = (req, res) => {
       runValidators: true,
     },
   )
-    .then((user) => res.send({ user }))
+    .then((user) => res.send(user))
     .catch((err) => checkDataError(res, err));
 };
 
@@ -98,7 +95,7 @@ const updateAvatar = (req, res) => {
       runValidators: true,
     },
   )
-    .then((user) => res.send({ user }))
+    .then((user) => res.send(user))
     .catch((err) => checkDataError(res, err));
 };
 
@@ -119,7 +116,7 @@ const login = (req, res, next) => {
         })
     })
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'secret', { expiresIn: JWT_TTL });
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: JWT_TTL });
       res.send({ token });
     })
     .catch(next);
