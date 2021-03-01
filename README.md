@@ -2,5 +2,6 @@
 Репозиторий для приложения проекта `Mesto`, включающий фронтенд и бэкенд части приложения со следующими возможностями: авторизации и регистрации пользователей, операции с карточками и пользователями. Бэкенд расположите в директории `backend/`, а фронтенд - в `frontend/`. 
   
 
-Бекэнд: http://api.ntitov.students.nomoreparties.space/
-Фронтэнд: http://ntitov.students.nomoreparties.space/
+Бекэнд: https://api.ntitov.students.nomoredomains.monster
+Фронтэнд: https://ntitov.students.nomoredomains.monster
+IP: 178.154.233.219
