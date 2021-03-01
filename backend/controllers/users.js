@@ -1,24 +1,16 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const { NotFound, Conflict, Unauthorized } = require('../errors');
+const { NotFound, Conflict, Unauthorized, BadRequest } = require('../errors');
 const { JWT_SECRET, JWT_TTL } = require('../config');
 
-const checkDataError = (res, err) => {
-  if ((err.name === 'ValidationError') || (err.name === 'CastError')) {
-    return res.status(400).send({ message: `Переданы неверные/ неполные данные: ${err}` });
-  }
-  return res.status(500).send({ message: `На сервере произошла ошибка ${err}` });
-};
 
 const getUsers = (req, res) => {
   User.find({})
     .then((users) => {
       res.send(users);
     })
-    .catch((err) => {
-      res.status(500).send({ message: err.message });
-    });
+    .catch(next);
 };
 
 const getUser = (req, res, next) => {
@@ -68,6 +60,11 @@ const createUser = (req, res, next) => {
     .then(({ _id, eml }) => {
       res.send({ _id, eml });
     })
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        throw new BadRequest('Введены некорректные данные');
+      }
+    })
     .catch(next);
 };
 
@@ -81,8 +78,18 @@ const updateUser = (req, res) => {
       runValidators: true,
     },
   )
-    .then((user) => res.send(user))
-    .catch((err) => checkDataError(res, err));
+  .then((u) => {
+    if (!u) {
+      throw new NotFound('Нет пользователя с таким id');
+    }
+    return res.send(u);
+  })
+  .catch((err) => {
+    if (err.name === 'ValidationError') {
+      throw new BadRequest('Введены некорректные данные');
+    }
+  })
+  .catch(next);
 };
 
 const updateAvatar = (req, res) => {
@@ -95,8 +102,18 @@ const updateAvatar = (req, res) => {
       runValidators: true,
     },
   )
-    .then((user) => res.send(user))
-    .catch((err) => checkDataError(res, err));
+  .then((u) => {
+    if (!u) {
+      throw new NotFound('Нет пользователя с таким id');
+    }
+    return res.send(u);
+  })
+  .catch((err) => {
+    if (err.name === 'ValidationError') {
+      throw new BadRequest('Введены некорректные данные');
+    }
+  })
+  .catch(next);
 };
 
 const login = (req, res, next) => {
@@ -112,7 +129,7 @@ const login = (req, res, next) => {
           if (isValid) {
             return user;
           }
-          throw new Unauthorized('Неверный email или пароль!!');
+          throw new Unauthorized('Неверный email или пароль');
         });
     })
     .then((user) => {

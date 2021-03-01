@@ -28,7 +28,7 @@ app.use('/', router);
 // раздаём папку с собранным фронтендом
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
-app.use(errorHandler);
+//app.use(errorHandler);
 
 app.use((req, res) => {
   res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
