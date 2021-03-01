@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { Forbidden } = require('../errors');
-//const { JWT_SECRET } = require('../config');
+// const { JWT_SECRET } = require('../config');
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 const auth = (req, res, next) => {
@@ -25,5 +25,3 @@ const auth = (req, res, next) => {
 };
 
 module.exports = auth;
-
-

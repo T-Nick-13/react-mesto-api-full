@@ -1,5 +1,5 @@
-class NotFound extends Error{
-  constructor(message){
+class NotFound extends Error {
+  constructor(message) {
     super();
 
     this.message = message;

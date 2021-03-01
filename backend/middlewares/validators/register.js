@@ -1,4 +1,4 @@
-const {celebrate, Joi} = require('celebrate');
+const { celebrate, Joi } = require('celebrate');
 
 const register = celebrate({
   body: Joi.object().keys({
@@ -7,7 +7,7 @@ const register = celebrate({
     name: Joi.string().min(2).max(30),
     avatar: Joi.string().pattern(/https?:\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/),
     about: Joi.string().min(2).max(30),
-  })
-})
+  }),
+});
 
 module.exports = register;

@@ -1,5 +1,5 @@
-class Forbidden extends Error{
-  constructor(message){
+class Forbidden extends Error {
+  constructor(message) {
     super();
 
     this.message = message;

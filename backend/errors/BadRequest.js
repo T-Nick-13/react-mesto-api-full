@@ -1,5 +1,5 @@
-class BadRequest extends Error{
-  constructor(message){
+class BadRequest extends Error {
+  constructor(message) {
     super();
 
     this.message = message;

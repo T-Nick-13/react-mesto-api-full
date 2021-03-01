@@ -1,5 +1,5 @@
-class Conflict extends Error{
-  constructor(message){
+class Conflict extends Error {
+  constructor(message) {
     super();
 
     this.message = message;

@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.ntitov.students.nomoreparties.space';
+export const BASE_URL = 'https://api.ntitov.students.nomoredomains.monster';
 
 function checkResponse(response) {
   if (response.ok) {

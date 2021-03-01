@@ -1,5 +1,5 @@
-class Unauthorized extends Error{
-  constructor(message){
+class Unauthorized extends Error {
+  constructor(message) {
     super();
 
     this.message = message;
