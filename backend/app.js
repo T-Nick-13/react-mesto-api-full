@@ -46,7 +46,7 @@ app.use('/', router);
 
 app.use(errorLogger);
 
-app.use(errorHandler);
+/* app.use(errorHandler); */
 
 app.use((req, res) => {
   throw new NotFound('Запрашиваемый ресурс не найден');
