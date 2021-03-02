@@ -3,11 +3,12 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const cors = require('cors');
-const { celebrate, Joi, errors } = require('celebrate');
+const { celebrate, Joi } = require('celebrate');
 const router = require('./routes');
 const { login, createUser } = require('./controllers/users');
 const registerValidator = require('./middlewares/validators/register');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { NotFound } = require('./errors');
 /* const path = require('path') */
 
 const { PORT = 3000 } = process.env;
@@ -45,15 +46,8 @@ app.use(express.static(path.join(__dirname, '../frontend/build'))); */
 
 app.use(errorLogger);
 
-app.use(errors());
-
-app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
-  res.status(statusCode).send({
-    message: statusCode === 500
-      ? 'На сервере произошла ошибка'
-      : message,
-  });
+app.use(() => {
+  throw new NotFound('Запрашиваемый ресурс не найден');
 });
 
 app.listen(PORT, () => {
