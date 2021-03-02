@@ -2,13 +2,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-const { celebrate, Joi } = require('celebrate');
 const cors = require('cors');
+const { celebrate, Joi, errors } = require('celebrate');
 const router = require('./routes');
 const errorHandler = require('./middlewares/errorHandler');
 const { login, createUser } = require('./controllers/users');
 const registerValidator = require('./middlewares/validators/register');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const path = require('path')
 
 const { NotFound } = require('./errors');
 
@@ -21,8 +22,8 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useFindAndModify: false,
 });
 
-app.use(bodyParser.json());
 app.use(cors());
+app.use(bodyParser.json());
 
 app.use(requestLogger);
 
@@ -42,14 +43,19 @@ app.post('/signup', registerValidator, createUser);
 
 app.use('/', router);
 // раздаём папку с собранным фронтендом
-/* app.use(express.static(path.join(__dirname, '../frontend/build'))); */
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 app.use(errorLogger);
 
-app.use(errorHandler);
+app.use(errors());
 
-app.use(() => {
-  throw new NotFound('Запрашиваемый ресурс не найден');
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message } = err;
+  res.status(statusCode).send({
+    message: statusCode === 500
+      ? 'На сервере произошла ошибка'
+      : message,
+  });
 });
 
 app.listen(PORT, () => {
