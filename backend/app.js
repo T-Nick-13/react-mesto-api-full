@@ -5,13 +5,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const { celebrate, Joi, errors } = require('celebrate');
 const router = require('./routes');
-const errorHandler = require('./middlewares/errorHandler');
 const { login, createUser } = require('./controllers/users');
 const registerValidator = require('./middlewares/validators/register');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const path = require('path')
-
-const { NotFound } = require('./errors');
+/* const path = require('path') */
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -42,8 +39,9 @@ app.post('/signin', celebrate({
 app.post('/signup', registerValidator, createUser);
 
 app.use('/', router);
-// раздаём папку с собранным фронтендом
-app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+/* // раздаём папку с собранным фронтендом
+app.use(express.static(path.join(__dirname, '../frontend/build'))); */
 
 app.use(errorLogger);
 
